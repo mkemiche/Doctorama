@@ -1,0 +1,65 @@
+{# src/DT/DoctoramaBundle/Resources/views/Doctorama/modif_reunion.html.twig#}
+{% extends "DTDoctoramaBundle::index.html.twig" %}
+
+{% block DTDoctoramaBody %}
+
+    <legend>
+      <h3> {{title}} </h3>
+    </legend>
+
+    <section class="row">
+       {# src/DT/DoctoramaBundle/Resources/views/Template/template_dossierSuivis.html.twig#}
+{{ form_start(formReunion, {'attr': {'class': 'form-horizontal'}}) }}
+{{ form_widget(formReunion._token) }}
+{# Les erreurs générales du formulaire. #}
+{{ form_errors(formReunion) }}
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="these">
+     
+
+        <div class="form-group">
+            {{ form_label(formReunion.lieu,"Lieu",{'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+            <div class="col-sm-6">
+                {{ form_widget(formReunion.lieu,{'attr': {'class': 'form-control'} }) }}
+            </div>
+
+        </div >
+        <div class="form-group">
+            {{ form_label(formReunion.date,"Date",{'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+            <div class="col-sm-9">
+                {{ form_widget(formReunion.date) }}
+            </div>
+        </div>
+         <div class="form-group">
+            {{ form_label(formReunion.encadrants,"Encadrant",{'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+            <div class="col-sm-9">
+                {{ form_widget(formReunion.encadrants) }}
+            </div>
+
+        </div>
+            <div class="form-group">
+            {{ form_label(formReunion.doctorant,"Doctorant",{'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+            <div class="col-sm-9">
+                {{ form_widget(formReunion.doctorant) }}
+            </div>
+        </div>
+
+             </div>
+            <div class="form-group">
+            {{ form_label(formReunion.libelle,"Libelle",{'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+            <div class="col-sm-6">
+                {{ form_widget(formReunion.libelle) }}
+            </div>
+        </div>
+        </div>
+        
+         {{form_widget(formReunion.save,{'label':'Enregistrer','attr':{'class':'btn btn-lg btn-success col-md-push-3 col-sm-2 ', 'style':'margin-top:40px'}})}}
+
+        {{form_end(formReunion) }}
+    </div>
+
+
+    </section>
+
+    
+{% endblock %}

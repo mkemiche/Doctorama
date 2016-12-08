@@ -1,0 +1,107 @@
+dt_doctorama_accueil:
+    pattern:   /
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:index}
+    #defaults: { _controller: DTDoctoramaBundle:Security:index}
+    
+dt_doctorama_mes_doctorants:
+    pattern: /encadrant/mes_doctorants
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:mesDoctorants}
+    
+dt_doctorama_doctorant_labo:
+    pattern: /encadrant/doctorant_labo
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:doctorantLabo}
+
+dt_doctorama_agenda:
+    pattern: /agenda
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:agenda}
+    
+dt_doctorama_statistiques:
+    pattern: /statistiques
+    defaults: {  _controller: DTDoctoramaBundle:Doctorama:statistiques}
+
+dt_doctorama_historique_doctorants:
+    pattern: /encadrant/historique_doctorants
+    defaults: {  _controller: DTDoctoramaBundle:Doctorama:historiqueDoctorants}
+    
+dt_doctorama_index:
+    pattern:   /index
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:index}
+
+dt_doctorama_admin_dossier_suivis:
+    pattern: /encadrant/dossier_suivis
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:adminDossierSuivis}
+
+dt_doctorama_admin_utilisateur:
+    pattern: /directeur_labo/admin_utilisateur
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:adminUtilisateur}
+    
+dt_doctorama_admin_infos_perso:
+    pattern: /directeur_labo/admin_utilisateur/{id_compte}
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:adminInfosPero}
+
+dt_doctorama_info_perso:
+    pattern: /info_perso
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:infoPerso}
+    
+dt_doctorama_creer_dossier_suivis:
+    pattern: /encadrant/doctorant_labo/creer_dossier_suivis
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:creerDossierSuivis}
+    
+dt_doctorama_modif_dossier_suivis:
+    pattern: /encadrant/doctorant_labo/modif_dossier_suivis/{id_doctorant}
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:modifDossierSuivis}
+
+dt_detail_doctorant:
+    pattern: /detail_doctorant/{id_doctorant}
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:detailDoctorant}
+
+dt_formulaire_creation_dossier:
+    pattern: /encadrant/creation_dossier_suivis
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:creationDossier}
+
+dt_export_fiche:
+    pattern: /encadrant/export_fiche
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:exportFiche}
+
+ 
+dt_modif_reunion:
+    pattern: /encadrant/modifier_reunion/{id_reunion}
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:modifReunion}
+
+    
+dt_doctorama_importCsv:
+    pattern: /directeur_labo/importation_csv
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:importCsv}
+    
+dt_doctorama_parse_csv:
+    pattern: /parse_csv
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:parseCsv}	
+
+dt_creation_reunion:
+    pattern: /encadrant/creation_reunion
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:creationReunion}
+    
+dt_popup_archivage:
+    pattern: /encadrant/archiver_these/{id_these}
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:archiverThese}
+
+
+dt_fermer_fenetre:
+    pattern: /fermer_fenetre
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:fermerFenetre}
+
+dt_doctorama_modif_fiche:
+    pattern: /encadrant/modifier_fiche
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:modifFiche}
+
+dt_doctorama_modif_fiche_form:
+    pattern: /encadrant/modifier_fiche_form
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:modifFicheForm}
+    
+dt_admin_passer_encadrant:
+    pattern: /directeur_labo/passer_encadrant/{id_doctorant}
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:passerEncadrant}
+
+dt_doctorama_add_template:
+    pattern: /add_template
+    defaults: { _controller: DTDoctoramaBundle:Doctorama:addTemplate}

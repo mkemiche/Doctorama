@@ -1,0 +1,13 @@
+/nbproject/**
+/app/cache/**
+/app/logs/**
+/app/config/parameters.yml
+/vendor/doctrine
+src/DT/DoctoramaBundle/Controller/DoctoramaController.php
+
+
+#Pour les fichiers temporaires de linux
+*.*~
+
+startFixtures.sh
+l3beg052.4g5.txt

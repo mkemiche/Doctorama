@@ -1,0 +1,78 @@
+{# src/DT/DoctoramaBundle/Resources/views/Doctorama/statistiques.html.twig#}
+{% extends "DTDoctoramaBundle::index.html.twig" %}
+
+{% block DTDoctoramaBody %}
+
+<legend>
+  <h3>{{title}}</h3>
+</legend>
+<section class="row">
+	<div class="col-md-3">
+		<p>
+			Durée moyenne d'une thèse :
+		</p>
+	</div>
+	<div class="col-md-2">
+		<p>
+			<strong>{{dureeMoyenne}}</strong>
+		</p>
+	</div>
+</section>
+<section class="row">
+	<div class="col-md-3">
+		<p>
+			Pourcentage réussite thèse :
+		</p>
+	</div>
+	<div class="col-md-2">
+		<div id="chartdiv" style="height:300px;width:400px; "></div>
+	</div>
+</section>
+
+
+<section class="row-fluid">
+	<div class="table-responsive">
+		<table class="table border1px table-striped">
+		  <thead>
+			<tr>
+			  <th>Encadrant</th>
+			  <th>% de thèses encadré</th>
+			</tr>
+		  </thead>
+		  <tbody>
+			{% set progression = 0 %}
+			{% if encadrants is defined %}
+				{% for encadrant in encadrants %}
+					<tr>
+						<td>
+							{% if encadrant.nom is defined %}
+								{{ encadrant.nom }}
+							{% endif %}
+							{% if encadrant.prenom is defined %}
+								{{ encadrant.prenom }}
+							{% endif %}
+						</td>
+						<td>
+							<div class="progress">
+							{% if encadrant.progress is defined %}
+								<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{encadrant.progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{encadrant.progress}}%;">
+									{{encadrant.progress}}%
+								</div>
+							{% else %}
+								{% set progress = random(50) %}
+								
+								<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progress}}%;">
+									{{progress}}%
+								</div>
+							{%endif %}
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+			{%endif %}
+			
+		  </tbody>
+		</table>
+	</div>      
+</section>
+{% endblock %}

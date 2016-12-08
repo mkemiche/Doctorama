@@ -1,0 +1,78 @@
+{# src/DT/DoctoramaBundle/Resources/views/Doctorama/liste_doctorants_encadres.html.twig#}
+{% extends "DTDoctoramaBundle::index.html.twig" %}
+
+{% block DTDoctoramaBody %}
+
+<legend>
+  <h3>{{title}}</h3>
+</legend>
+<div class="container-fluid">
+	<div class="row">
+		<table class="table table-striped">
+			<tr>
+				<th>
+					Doctorant
+				</th>
+				<th>
+					Sujet de thèse
+				</th>
+				<th>
+					Encadrant
+				</th>
+				<th>
+					Progression
+				</th>
+				<th>
+				</th>
+			</tr>
+			{% for doctorant in doctorants %}
+				<tr>
+					<td>
+						{% if doctorant.nomUsage is defined  %}
+							{{ doctorant.nomUsage }} 
+						{% endif %}
+						 
+						{% if doctorant.prenom is defined %}
+							{{ doctorant.prenom }}
+						{% endif %}	
+					</td>
+					<td><a href="#">
+					{% if doctorant.these.titreThese is defined %}
+						{{doctorant.these.titreThese}}
+					{% endif %}
+					</a></td>
+                                      
+					<td>
+					{% if encadrants is defined %}
+						<ul>
+							{% for encadrant in encadrants %}
+								<li>
+									{{ encadrant.nomUsage }} {{ encadrant.prenom }}
+								</li>
+							{% endfor %}
+						</ul>
+					</td>
+					{% endif %}
+					<td>
+					<div class="progress">
+                                            {%if doctorant.these.dateDebut is defined and doctorant.these.dateDeSoutenance is defined%}
+                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{doctorant.these.dateDebut|progressionDoctorant( doctorant.these.dateDeSoutenance )}}" aria-valuemin="0" aria-valuemax="100" style="width: {{doctorant.these.dateDebut|progressionDoctorant( doctorant.these.dateDeSoutenance )}}%;">
+                                                 {{doctorant.these.dateDebut|progressionDoctorant( doctorant.these.dateDeSoutenance )}}%
+                                            </div>
+                                                
+                                            {%else%}
+                                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="6O" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                                 <FONT color="black">0%</FONT>
+                                                </div>
+                                            {%endif%}
+					</div>
+				</td>
+				<td class="">
+					<a href="{{ path('dt_detail_doctorant', {'id_doctorant': doctorant.id}) }}" class="pull-right btn btn-info">Détails</a>
+				</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
+{% endblock %}

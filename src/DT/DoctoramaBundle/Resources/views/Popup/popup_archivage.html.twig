@@ -1,0 +1,37 @@
+{# src/DT/DoctoramaBundle/Resources/views/Popup/popup_archivage.html.twig#}
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <link href="{{asset('bundles/doctorama/public/css/jasny-bootstrap.min.css')}}" rel="stylesheet">
+        <link href="{{asset('bundles/doctorama/public/css/bootstrap.css')}}" rel="stylesheet">
+        <link href="{{asset('bundles/doctorama/public/css/style.css')}}" rel="stylesheet">
+        <link href="{{asset('bundles/doctorama/public/css/fullcalendar.css')}}" rel="stylesheet">
+        <link rel="stylesheet" href="{{asset('bundles/doctorama/public/lib/jqplot/jquery.jqplot.css')}}">
+    </head>
+    <body>
+        {{ form_start(formThese, {'attr': {'class': 'form-horizontal'}}) }}
+        {{ form_widget(formThese._token) }}
+        {# Les erreurs générales du formulaire. #}
+        {{ form_errors(formThese) }}
+        <div class="container-fluid">
+            {{ form_label(formThese.mention,"Mention",{'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+            <div class="col-sm-4">
+                {{ form_widget(formThese.mention,{'attr': {'class': 'form-control'} }) }}
+            </div>
+            <legend> </legend>
+ 
+            {{ form_widget(formThese.Enregistrer, {'attr': {'class': 'btn btn-success'}}) }}
+
+        </div >
+        {{form_rest(formThese) }}
+        {{ form_end(formThese) }}
+
+    </body>
+</html>
+
+
+
+

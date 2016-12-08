@@ -1,0 +1,17 @@
+dt_security:
+    resource: "@DTSecurityBundle/Resources/config/routing.yml"
+    prefix:   /
+
+login_check:
+    pattern: /login_check
+
+logout:
+    pattern: /logout
+    
+    
+dt_Doctorama:
+    resource: "@DTDoctoramaBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"

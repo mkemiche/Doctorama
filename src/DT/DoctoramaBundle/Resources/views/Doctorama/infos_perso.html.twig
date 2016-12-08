@@ -1,0 +1,123 @@
+{# src/DT/DoctoramaBundle/Resources/views/Doctorama/info_perso.html.twig#}
+{% extends "DTDoctoramaBundle::index.html.twig" %}
+
+{% block DTDoctoramaBody %}
+
+    <legend>
+        <h3> {{title}} </h3>
+    </legend>
+
+    <section class="row">
+        <form action="" method="post" class="form-horizontal"  role="form">
+
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#Administrative" aria-controls="sansrole" role="tab" data-toggle="tab">Informations administratives</a>
+                </li>
+                
+                {% if (compte is defined and compte.doctorant != null and compte.encadrant == null)  or (app.user.doctorant is defined and app.user.doctorant != null and app.user.encadrant==null)%}
+                    <li role="presentation">
+                        <a href="#Doctorant" aria-controls="avecrole" role="tab" data-toggle="tab">Informations Etudiants </a>
+                    </li>
+                {% endif %}
+                
+
+            </ul>
+
+            <section class="tab-content">
+                {{ form_start(form, {'attr': {'class': 'form-horizontal'} } ) }}
+                {{ form_widget(form._token) }}
+                {# Les erreurs générales du formulaire. #}
+                {{ form_errors(form) }}
+                <article role="tabpanel" class="tab-pane jumbotron backgroundWhite active" id="Administrative">
+                    <div class="form-group">
+                        {{ form_label(form.nom,"Nom",{'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.nom,{'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div >
+                    <div class="form-group">
+                        {{ form_label(form.prenom,"Prénom",{'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.prenom,{'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div >
+                    <div class="form-group">
+                        {{ form_label(form.nomUsage,"Nom d'usage",{'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.nomUsage,{'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.civilite,"Civilite",{'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.civilite,{'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.nationalite,"Nationalité",{'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.nationalite,{'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.adresse,"Adresse",{'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.adresse,{'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.mail,"Email",{'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.mail,{'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.dateDeNaissance,"Date de naissance",{'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.dateDeNaissance) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.villeDeNaissance,"Ville de naissance",{'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.villeDeNaissance,{'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.depDeNaissance,"Département de naissance",{'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.depDeNaissance,{'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.paysDeNaissance,"Pays de naissance",{'label_attr': {'class': 'col-sm-3 control-label'} }) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(form.paysDeNaissance,{'attr': {'class': 'form-control'} }) }}
+                        </div>
+                    </div>
+
+                </article>   
+                {% if (compte is defined and compte.doctorant != null and compte.encadrant == null)  or (app.user.doctorant is defined and app.user.doctorant != null and app.user.encadrant==null)%}
+                    {{ include("DTDoctoramaBundle:Template:template_info_etudiant.html.twig") }}
+                {% endif %}
+                {{ form_widget(form.Enregistrer, {'attr': {'class': 'btn btn-success'}}) }}
+                {% if (compte is defined and compte.doctorant != null and compte.encadrant == null)  or (app.user.doctorant is defined and app.user.doctorant != null and app.user.encadrant==null)%}
+                    <a href="{{ path('dt_admin_passer_encadrant', {'id_doctorant': compte.doctorant.id}) }}" class="btn btn-danger">Passer encadrant</a>
+                {% endif %}
+                {{ form_end(form) }}
+            </section>
+
+        </form>
+    </section>
+
+
+{% endblock %}

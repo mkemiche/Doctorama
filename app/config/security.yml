@@ -1,0 +1,61 @@
+# you can read more about security in the related section of the documentation
+# http://symfony.com/doc/current/book/security.html
+security:
+    # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+        Symfony\Component\Security\Core\User\User: plaintext
+
+    # http://symfony.com/doc/current/book/security.html#hierarchical-roles
+    role_hierarchy:
+        ROLE_ADMIN:       [ROLE_DOCTORANT, ROLE_ENCADRANT, ROLE_DIRECTEUR_THESE]
+        ROLE_DIRECTEUR_LABO: [ROLE_ADMIN]
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    providers:
+        chain_provider:
+            chain :
+                providers: [in_memory, fos_userbundle]
+        fos_userbundle:
+            id: fos_user.user_provider.username
+        in_memory:
+            memory:
+                users:
+                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+                    directeur_these: { password: directeurthese, roles [ 'ROLE_DIRECTEUR_THESE'] }
+                    encadrant: { password: encadrant, roles: [ 'ROLE_ENCADRANT' ] }
+                    doctorant: { password: doctorant, roles: [ 'ROLE_DOCTORANT' ] }
+                    directeur_labo: { password: directeurlabo, roles: [ 'ROLE_DIRECTEUR_LABO' ] }
+
+    # the main part of the security, where you can set up firewalls
+    # for specific sections of your app
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        secured_area:
+            pattern: ^/
+            anonymous: ~
+            form_login:
+                provider: chain_provider
+                login_path:  /login
+                check_path:  /login_check
+            logout:
+                path:   /logout
+                target: /
+
+
+    # with these settings you can restrict or allow access for different parts
+    # of your application based on roles, ip, host or methods
+    # http://symfony.com/doc/current/book/security.html#security-book-access-control-matching-options
+    access_control:
+        - { path: ^/login, roles:  IS_AUTHENTICATED_ANONYMOUSLY ,requires_channel: form_login } 
+        - { path: ^/doctorant, roles: ROLE_DOCTORANT ,requires_channel: form_login }
+        - { path: ^/encadrant, roles: [ROLE_ENCADRANT,ROLE_DIRECTEUR_THESE] ,requires_channel: form_login }
+        - { path: ^/statistiques, roles: [ROLE_ENCADRANT,ROLE_DIRECTEUR_THESE] ,requires_channel: form_login }
+        - { path: ^/directeur_labo, roles: [ROLE_ENCADRANT,ROLE_DIRECTEUR_THESE,ROLE_DOCTORANT] ,requires_channel: form_login }
+        - { path: ^/, roles: [ROLE_ENCADRANT,ROLE_DIRECTEUR_THESE,ROLE_DOCTORANT] ,requires_channel: form_login }
+        
+        

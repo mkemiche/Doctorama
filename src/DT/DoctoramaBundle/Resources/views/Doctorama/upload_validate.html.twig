@@ -1,0 +1,70 @@
+
+{# src/DT/DoctoramaBundle/Resources/views/Doctorama/doctorant_labo.html.twig #}
+{% extends "DTDoctoramaBundle::index.html.twig" %}
+
+
+{% block DTDoctoramaBody %}
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <legend>
+          <h3>Importation du fichier réussie </h3>
+        </legend>
+
+<center>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="error-template">
+                <h1>Votre fichier a bien été importé !</h1>
+            </div>
+        </div>
+    </div>
+</div>
+</center>
+<legend>
+	<h3>Liste des doctorants importés </h3>
+</legend>
+<center>
+<div class="container-fluid">
+	<div class="row">
+		<table class="table table-striped">
+			<tr>
+				<th>
+					Nom
+				</th>
+				<th>
+					Prenom
+				</th>
+				<th>
+					Date de naissance
+				</th>
+				<th>
+					Sujet de la thèse
+				</th>
+				<th>
+					Specialite de la thèse
+				</th>
+			</tr>
+			{% for doctorant in list_doctorants %}
+				<tr>
+					<td>
+						{{ doctorant[0] }}
+					</td>
+					<td>
+						{{ doctorant[1] }}
+					</td>                
+					<td>
+						{{ doctorant[2] }}
+					</td>
+					<td>
+						{{ doctorant[3] }}
+					</td>
+					<td>
+						{{ doctorant[4] }}
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
+</center>
+{% endblock %}

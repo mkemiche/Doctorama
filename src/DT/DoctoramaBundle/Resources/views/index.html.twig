@@ -1,0 +1,116 @@
+{# src/DT/UserBundle/Resources/views/index.html.twig #}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <title>{{ title }}</title>';
+        <link href="{{asset('bundles/doctorama/public/css/jasny-bootstrap.min.css')}}" rel="stylesheet">
+        <link href="{{asset('bundles/doctorama/public/css/bootstrap.css')}}" rel="stylesheet">
+        <link href="{{asset('bundles/doctorama/public/css/style.css')}}" rel="stylesheet">
+        <link href="{{asset('bundles/doctorama/public/css/fullcalendar.css')}}" rel="stylesheet">
+        <link rel="stylesheet" href="{{asset('bundles/doctorama/public/lib/jqplot/jquery.jqplot.css')}}">
+    </head>
+    <body>
+        <div class="Menu navmenu navmenu-default navmenu-fixed-left">
+            <img src="{{asset('bundles/doctorama/public/img/logo.png')}}" class="img-responsive center-block" style="margin-bottom:15px"/>
+            <div class="well sidebar">
+                <ul class="nav nav-list">
+                    <li class="nav-header">
+                    <legend>
+                        <i class="glyphicon glyphicon-align-justify"></i>
+                        <b style="font-size:12pt">MENU PRINCIPAL</b>
+                    </legend>
+                    </li>
+                    <li><a href="{{ path('dt_doctorama_agenda') }}" >Agenda</a></li>
+                    {% if is_granted('ROLE_DIRECTEUR_THESE') or is_granted('ROLE_ENCADRANT') %} 
+                    <li><a href="{{ path('dt_doctorama_mes_doctorants') }}">Doctorants encadrés </a></li>
+                    <li><a href="{{ path('dt_doctorama_doctorant_labo') }}">Doctorants du laboratoire </a></li>
+                    <li><a href="{{ path('dt_doctorama_statistiques') }}">Statistiques</a></li>
+                    <li><a href="{{ path('dt_doctorama_historique_doctorants') }}">Historique doctorants</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="well sidebar">
+                <ul class="nav nav-stacked">
+                    <li class="nav-header">
+                    <legend>
+                        <i class="glyphicon glyphicon-wrench"></i>
+                        <b style="font-size:12pt">MENU ADMINISTRATION</b>
+                    </legend>
+                    </li>
+                    {% if is_granted('ROLE_DIRECTEUR_THESE') or is_granted('ROLE_ENCADRANT') %} 
+                    <li><a href="{{ path('dt_doctorama_admin_dossier_suivis') }}">Dossier de suivi</a></li>
+                    <li><a href="{{ path('dt_doctorama_modif_fiche') }}">Template de fiche de suivi</a></li>
+                    {% endif %}
+                    
+                    <li><a href="{{ path('dt_doctorama_info_perso') }}">Informations Personnelles</a></li>
+
+                    {% if is_granted('ROLE_DIRECTEUR_LABO') %} 
+                    <li><a href="{{ path('dt_doctorama_admin_utilisateur') }}">Administration utilisateurs</a></li>
+                    <li><a href="{{ path('dt_doctorama_importCsv') }}">Importation CSV</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            
+        </div>
+        <div class="canvas Conteneur">
+            <div class="navbar navbar-default navbar-fixed-top EnTete">
+                <div class="row">
+                    <div class="col-md-6 col-xs-6">
+                        <button type="button" class="navbar-toggle ico-menu" data-toggle="offcanvas" data-recalc="false" data-target=".navmenu" data-canvas=".canvas">
+                            <span class="icon-bar" style="background:#f2f2f2;"></span>
+                            <span class="icon-bar" style="background:#f2f2f2;"></span>
+                            <span class="icon-bar" style="background:#f2f2f2;"></span>
+                        </button>
+                        {{ title }}
+                    </div>
+
+                    <div class="col-md-6  col-xs-6 text-right">
+                        <div class="fr btn-group" style="margin-right:15px;">
+                            <button type="button" class="btn btn-xs btn-user">
+                                {% if app.user.doctorant is defined and app.user.doctorant != null %} 
+                                    {{app.user.doctorant.nom}} {{app.user.doctorant.prenom}}
+                                {% elseif app.user.encadrant is defined and app.user.encadrant != null %} 
+                                    {{app.user.encadrant.nom}} {{app.user.encadrant.prenom}}
+                                {% elseif app.user.directeur is defined and app.user.directeur != null %} 
+                                    {{app.user.directeur.nom}} {{app.user.directeur.prenom}}
+                                {% elseif is_granted('ROLE_DIRECTEUR_LABO') %}
+                                    Directeur Laboratoire
+                                {% elseif is_granted('ROLE_DIRECTEUR_THESE') %}
+                                    Directeur These
+                                {% elseif is_granted('ROLE_ENCADRANT') %}
+                                    Encadrant
+                                {% elseif is_granted('ROLE_DOCTORANT') %}
+                                    Doctorant
+                                {% endif %}
+                            </button>
+                            <button type="button" class="btn btn-xs btn-user dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href="{{ path('logout') }}">Deconnexion</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+
+            {% block DTDoctoramaBody %}{% endblock %}
+
+            </div>
+        </div>
+        <script src="{{asset('bundles/doctorama/public/js/jquery.min.js')}}"></script>
+        <script src="{{asset('bundles/doctorama/public/js/bootstrap.js')}}"></script>
+        <script src="{{asset('bundles/doctorama/public/js/jasny-bootstrap.min.js')}}"></script>
+        <script type="text/javascript" src="{{asset('bundles/doctorama/public/lib/jqplot/jquery.jqplot.min.js')}}"></script>
+        <script type="text/javascript" src="{{asset('bundles/doctorama/public/lib/jqplot/plugins/jqplot.pieRenderer.js')}}"></script>
+        <script src="{{asset('bundles/doctorama/public/js/comportement.js')}}"></script>
+        <script src="{{asset('bundles/doctorama/public/js/moment.min.js')}}"></script>
+        <script src="{{asset('bundles/doctorama/public/js/fullcalendar.js')}}"></script>        
+        <script src="{{asset('bundles/doctorama/public/js/fr.js')}}"></script> 
+    </body>
+</html>

@@ -1,0 +1,81 @@
+{# src/DT/DoctoramaBundle/Resources/views/Doctorama/detail_doctorant.html.twig#}
+{% extends "DTDoctoramaBundle::index.html.twig" %}
+
+{% block DTDoctoramaBody %}
+
+    <legend>
+        <h3>{{title}} : {{doctorant.nom}} {{doctorant.prenom}}</h3>
+    </legend>
+
+    <section class="row-fluid details_doctorant">
+        <div role="tabpanel">
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active"><a href="#these" aria-controls="these" role="tab" data-toggle="tab">Thèse</a></li>
+				<li role="presentation"><a href="#doctorant" aria-controls="doctorant" role="tab" data-toggle="tab">Doctorant</a></li>
+				{% for ficheId, ficheContent in fiches %}
+					<li role="presentation"><a href="#{{ficheId}}" class="fiche" aria-controls="{{ficheId}}" role="tab" data-toggle="tab">{{ficheId}}</a></li>
+				{% endfor %}
+			</ul>
+			{{ include("DTDoctoramaBundle:Template:template_dossierSuivis.html.twig") }}
+				<form></form>
+				{% for ficheId, ficheContent in fiches %}
+				<div role="tabpanel" class="tab-pane" id="{{ficheId}}">
+					<div class="col-sm-8">
+						<form name="form" class="form-horizontal" role="form" method="post" action="{{path('dt_export_fiche')}}?nom={{doctorant.nom}} {{doctorant.prenom}}">
+							<input type="hidden" name="ficheId" value="{{ficheId}}" />
+							<input type="hidden" name="ficheLabel" value="{{ficheContent.label}}" />
+							<legend>
+								Fiche de suivi de réunion du {{ficheContent.date_reunion}}
+							</legend>
+							{%set id=0 %}
+							{% for question in ficheContent.questions %}
+								{% set id = id+1 %}
+								<div class="form-group">
+									<label class="col-sm-4 control-label">{{question.question}} :</label>
+									<div class="col-sm-8">
+										<input type="hidden" name="{{ficheId}}[question{{id}}]" value="{{question.question}}"/>
+										<input type="text" class="form-control" id="{{ficheId}}[reponse{{id}}]" name="{{ficheId}}[reponse{{id}}]" value="{{question.reponse}}" readonly />
+									</div>
+								</div>
+							{% endfor %}
+							<div class="form-group">
+								<div class="col-sm-4"></div>
+								<div class="col-sm-6">
+									<span class="modifFiche_buttons">
+										<input type="button" class="btn btn-info modifFiche_modifier" value="Modifier">
+										<input type="submit" class="btn btn-info modifFiche_valider" name="export" value="Valider">
+										<input type="button" class="btn btn-info modifFiche_annuler" value="Annuler">
+										<input type="hidden" class="modifFiche_id" value="{{ficheId}}"/>
+									</span>
+									<input type="submit" class="btn btn-info" id="exportPDF" name="export" value="PDF">
+									<input type="submit" class="btn btn-info" id="exportCSV" name="export" value="CSV">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			<legend> </legend>
+			<div class="form-group" id="modif_buttons">
+				<div class="col-sm-offset-3 col-sm-9">
+					{% if doctorant.these.mention == null %} 
+                                            <a href="{{ path('dt_doctorama_modif_dossier_suivis', {'id_doctorant': doctorant.id}) }}" class="btn btn-warning" role="button">Modifier</a>
+                                        
+                                            <a href="javascript:affichage_popup('{{ path('dt_popup_archivage', {'id_these': doctorant.these.id}) }}','popup_1');" class="btn btn-danger">Archiver</a>
+
+                                            <SCRIPT LANGUAGE="JavaScript">
+                                                function affichage_popup(nom_de_la_page, nom_interne_de_la_fenetre)
+                                                {
+                                                    window.open(nom_de_la_page, nom_interne_de_la_fenetre, config='height=400, width=500, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, directories=no, status=no');
+                                                }
+
+                                            </SCRIPT>
+                                        {%endif%}
+                                </div>
+			</div>
+		</div>
+		{{form_end(formDoctorant)}}
+	</section>
+        
+{% endblock %}
